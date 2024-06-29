@@ -28,6 +28,8 @@ set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/OGL3D/source)
 # List of source files
 file(GLOB SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/Game/main.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Game/MyGame.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/Game/MyPlayer.cpp"
 
     "${SOURCE_DIR}/OGL3D/Game/Win32/CWin32Game.cpp"
     "${SOURCE_DIR}/OGL3D/Game/OGame.cpp"
@@ -36,6 +38,8 @@ file(GLOB SOURCES
     "${SOURCE_DIR}/OGL3D/Graphics/*.cpp"
 
     "${SOURCE_DIR}/OGL3D/Window/CWin32Window.cpp"
+
+    "${SOURCE_DIR}/OGL3D/Entity/*.cpp"
 
     "${CMAKE_CURRENT_SOURCE_DIR}/OGL3D/vendor/glad/src/glad_wgl.c"
     "${CMAKE_CURRENT_SOURCE_DIR}/OGL3D/vendor/glad/src/glad.c"
@@ -48,6 +52,7 @@ find_package(OpenGL REQUIRED)
 
 # Set include directories
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/OGL3D/include)
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/Game)
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/OGL3D/vendor/glad/include)
 
 target_link_libraries(${PROJECT_NAME} ${OPENGL_LIBRARIES})

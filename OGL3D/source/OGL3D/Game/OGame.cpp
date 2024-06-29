@@ -3,9 +3,11 @@
 #include <OGL3D/Graphics/OVertexArrayObject.h>
 #include <OGL3D/Graphics/OShaderProgram.h>
 #include <OGL3D/Graphics/OUniformBuffer.h>
+#include <OGL3D/Graphics/OGraphicsEngine.h>
 #include <OGL3D/Math/OMat4.h>
 #include <OGL3D/Math/OVec3.h>
 #include <OGL3D/Math/OVec2.h>
+#include <OGL3D/Entity/OEntitySystem.h>
 
 struct UniformData
 {
@@ -23,6 +25,7 @@ OGame::OGame()
 {
     m_graphicsEngine = std::make_unique<OGraphicsEngine>();
     m_display = std::make_unique<OWindow>();
+    m_entitySystem = std::make_unique<OEntitySystem>();
 
     m_display->makeCurrentContext();
 
@@ -170,7 +173,7 @@ void OGame::onCreate()
 
 }
 
-void OGame::onUpdate()
+void OGame::onUpdateInternal()
 {
     // Computing delta time
     auto currentTime = std::chrono::system_clock::now();
@@ -184,6 +187,13 @@ void OGame::onUpdate()
     m_previousTime = currentTime;
 
     auto deltaTime = (f32)elapsedSeconds.count();
+
+
+
+    onUpdate(deltaTime);
+    m_entitySystem->update(deltaTime);
+
+
 
     m_scale += 0.14f * deltaTime;
     auto currentScale = abs(sin(m_scale));
@@ -236,4 +246,9 @@ void OGame::onQuit()
 void OGame::quit()
 {
     m_isRunning = false;
+}
+
+OEntitySystem* OGame::getEntitySystem()
+{
+    return m_entitySystem.get();
 }
